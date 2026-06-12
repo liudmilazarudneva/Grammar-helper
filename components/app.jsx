@@ -220,6 +220,8 @@ function App() {
   const [apiKey, setApiKey] = useLocalStorage(KEY_STORAGE, "");
   const [showKey, setShowKey] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const rewriteRef = useRef(null);
+  const replyIncomingRef = useRef(null);
 
   const [profileName, setProfileName] = useLocalStorage("gh_name", "");
   const [profileClosing, setProfileClosing] = useLocalStorage("gh_closing", "");
@@ -254,6 +256,22 @@ function App() {
   useEffect(() => {
     if (!TONES.some((tn) => tn.id === toneId)) setToneId(TONES[0].id);
   }, [toneId]);
+
+  useEffect(() => {
+    // Keep focus on the first field when loading and when switching tabs.
+    const focusTimer = requestAnimationFrame(() => {
+      const target = tab === "reply" ? replyIncomingRef.current : rewriteRef.current;
+      if (target && typeof target.focus === "function") {
+        target.focus();
+        const len = target.value ? target.value.length : 0;
+        if (typeof target.setSelectionRange === "function") {
+          target.setSelectionRange(len, len);
+        }
+      }
+    });
+
+    return () => cancelAnimationFrame(focusTimer);
+  }, [tab]);
 
   const channel = CHANNELS.find((c) => c.id === channelId) || CHANNELS[0];
   const sourceText = tab === "reply" ? replyDraft : draft;
@@ -335,6 +353,7 @@ function App() {
           {tab === "rewrite" ? (
             <section className="gh-card gh-compose">
               <textarea
+                ref={rewriteRef}
                 className="gh-textarea"
                 placeholder="Paste or type the message you want to clean up…"
                 value={draft}
@@ -356,6 +375,7 @@ function App() {
               <div className="gh-field">
                 <label className="gh-field-tag">Their message</label>
                 <textarea
+                  ref={replyIncomingRef}
                   className="gh-textarea gh-textarea-sm"
                   placeholder="Paste the email or message you received…"
                   value={incoming}
