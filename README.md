@@ -9,15 +9,6 @@ A small browser app that rewrites and polishes messages using Groq.
 - Has two modes: Rewrite and Reply
 - Saves your settings and API key in browser localStorage
 
-## Run
-
-From this folder, start a local server:
-
-python3 -m http.server 5500
-
-Then open:
-
-http://localhost:5500/Grammar%20Helper.html
 
 ## Files
 
