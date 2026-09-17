@@ -74,10 +74,10 @@ const TONES = [
 ];
 
 const MODELS = [
-  { id: "llama-3.3-70b-versatile", label: "Llama 3.3 70B · best quality" },
-  { id: "llama-3.1-8b-instant", label: "Llama 3.1 8B · fastest" },
-  { id: "openai/gpt-oss-20b", label: "GPT-OSS 20B" },
-  { id: "moonshotai/kimi-k2-instruct", label: "Kimi K2" },
+  { id: "groq/compound", label: "Groq Compound · free" },
+  { id: "groq/compound-mini", label: "Groq Compound Mini · fastest free" },
+  { id: "openai/gpt-oss-20b", label: "OpenAI GPT-OSS 20B · low cost" },
+  { id: "openai/gpt-oss-120b", label: "OpenAI GPT-OSS 120B · high quality" },
 ];
 
 function profileLines(profile, channel) {
